@@ -16,7 +16,6 @@ SelectPoller::~SelectPoller()
 SelectPoller* SelectPoller::createNew()
 {
     return new SelectPoller();
-    //    return New<SelectPoller>::allocate();
 }
 
 bool SelectPoller::addIOEvent(IOEvent* event)
@@ -30,7 +29,6 @@ bool SelectPoller::updateIOEvent(IOEvent* event)
     if (fd < 0)
     {
         LOGE("fd=%d",fd);
-
         return false;
     }
 
