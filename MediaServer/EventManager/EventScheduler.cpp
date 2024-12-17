@@ -95,7 +95,7 @@ bool EventScheduler::addTriggerEvent(TriggerEvent* event)
 }
 
 Timer::TimerId EventScheduler::addTimedEventRunAfater(TimerEvent* event, Timer::TimeInterval delay)
-{
+{//添加一个定时事件，事件会在指定的延迟后执行。
     Timer::Timestamp timestamp = Timer::getCurTime();
     timestamp += delay;
 
@@ -103,15 +103,14 @@ Timer::TimerId EventScheduler::addTimedEventRunAfater(TimerEvent* event, Timer::
 }
 
 Timer::TimerId EventScheduler::addTimedEventRunAt(TimerEvent* event, Timer::Timestamp when)
-{
+{//添加一个定时事件，指定事件在某个具体时间点执行。
     return mTimerManager->addTimer(event, when, 0);
 }
 
 Timer::TimerId EventScheduler::addTimedEventRunEvery(TimerEvent* event, Timer::TimeInterval interval)
-{
+{//添加一个定时重复事件，指定事件以固定时间间隔
     Timer::Timestamp timestamp = Timer::getCurTime();
     timestamp += interval;
-
     return mTimerManager->addTimer(event, timestamp, interval);
 }
 
