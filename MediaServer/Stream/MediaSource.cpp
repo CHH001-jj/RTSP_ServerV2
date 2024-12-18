@@ -27,6 +27,7 @@ MediaFrame* MediaSource::getFrameFromOutputQueue() {
 }
 
 void MediaSource::putFrameToInputQueue(MediaFrame *frame) {
+    //读取原始帧文件，通过任务线程进行处理后放入mFrameInputQueue以供发送
     std::lock_guard <std::mutex> lck(mMtx);
     mFrameInputQueue.push(frame);
     mEnv->threadPool()->addTask(mTask);

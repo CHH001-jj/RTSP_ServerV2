@@ -19,7 +19,10 @@ H264FileSink::H264FileSink(UsageEnvironment* env, MediaSource* mediaSource) :
         mFps(mediaSource->getFps())
 {
     LOGI("H264FileSink()");
+    
+    //添加一个定时重复事件，指定事件以固定时间间隔
     runEvery(1000 / mFps);
+    
 }
 
 H264FileSink::~H264FileSink()

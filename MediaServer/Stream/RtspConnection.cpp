@@ -20,7 +20,6 @@ static void getPeerIp(int fd, std::string& ip)
 RtspConnection* RtspConnection::createNew(RtspServer* rtspServer, int clientFd)
 {
     return new RtspConnection(rtspServer, clientFd);
-    //    return New<RtspConnection>::allocate(rtspServer, clientFd);
 }
 
 RtspConnection::RtspConnection(RtspServer* rtspServer, int clientFd) :
@@ -189,7 +188,7 @@ bool RtspConnection::parseRequest1(const char* begin, const char* end)
     }
     else if (sscanf(url + 7, "%[^/]/%s", ip, suffix) == 2)
     {
-        port = 554;// 如果rtsp请求地址中无端口，默认获取的端口为：554
+        port = 8554;// 如果rtsp请求地址中无端口，默认获取的端口为：8554
     }
     else
     {

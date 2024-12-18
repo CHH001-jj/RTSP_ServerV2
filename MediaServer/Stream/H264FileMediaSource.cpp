@@ -144,7 +144,7 @@ int H264FileMediaSource::getFrameFromH264File(uint8_t* frame, int size)
     int r, frameSize;
     uint8_t* nextStartCode;
 
-    r = fread(frame, 1, size, mFile);
+    r = fread(frame, 1, size, mFile);//size_t fread(void *ptr, size_t size, size_t count, FILE *stream);
     if (!startCode3(frame) && !startCode4(frame)) {
         fseek(mFile, 0, SEEK_SET);
         LOGE("Read %s error, no startCode3 and no startCode4",mSourceName.c_str());
@@ -154,7 +154,7 @@ int H264FileMediaSource::getFrameFromH264File(uint8_t* frame, int size)
 
     nextStartCode = findNextStartCode(frame + 3, r - 3);
     if (!nextStartCode) {
-        fseek(mFile, 0, SEEK_SET);
+        fseek(mFile, 0, SEEK_SET);//重置文件指针
         frameSize = r;
         LOGE("Read %s error, no nextStartCode, r=%d", mSourceName.c_str(),r);
     }else {

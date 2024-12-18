@@ -42,7 +42,7 @@ std::vector<std::string> getFileNames(const std::string& directory) {
 }
 int main() {
     srand(time(NULL));//时间初始化
-    EventScheduler* scheduler = EventScheduler::createNew(EventScheduler::POLLER_EPOLL);
+    EventScheduler* scheduler = EventScheduler::createNew(EventScheduler::POLLER_SELECT);
     ThreadPool* threadPool = ThreadPool::createNew(1);// 
     MediaSessionManager* sessMgr = MediaSessionManager::createNew();
     UsageEnvironment* env = UsageEnvironment::createNew(scheduler, threadPool);

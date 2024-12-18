@@ -180,8 +180,7 @@ void TimerManager::readCallback(void *arg) {
 }
 
 void TimerManager::handleRead() {
-
-    //LOGI("mTimers.size()=%d,mEvents.size()=%d",mTimers.size(),mEvents.size());
+    //一次处理一个定时器事件，然后使用modifyTimeout()更新剩下的定时器事件。
     Timer::Timestamp timestamp = Timer::getCurTime();
     if (!mTimers.empty() && !mEvents.empty()) {
 
@@ -206,7 +205,6 @@ void TimerManager::handleRead() {
             else {
                 mTimers.erase(timer.mTimerId);
             }
-
         }
     }
     modifyTimeout();

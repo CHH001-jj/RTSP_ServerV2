@@ -23,9 +23,7 @@ Sink::Sink(UsageEnvironment* env, MediaSource* mediaSource, int payloadType) :
 
     LOGI("Sink()");
     mTimerEvent = TimerEvent::createNew(this);
-    mTimerEvent->setTimeoutCallback(cbTimeout);
-
-    
+    mTimerEvent->setTimeoutCallback(cbTimeout);  
 }
 
 Sink::~Sink(){
