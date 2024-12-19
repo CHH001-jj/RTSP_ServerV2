@@ -25,7 +25,7 @@ double getFrameRate(const std::string& filePath) {
     while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
         result += buffer.data();
     }
-
+ 
     // Parse the output (e.g., "30/1")
     if (!result.empty()) {
         size_t pos = result.find('/');

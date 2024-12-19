@@ -1,19 +1,49 @@
 ﻿#include <string.h>
 #include "AACFileMediaSource.h"
 #include "../Utils/Log.h"
+#include <iostream>
 
 AACFileMeidaSource* AACFileMeidaSource::createNew(UsageEnvironment* env, const std::string& file)
 {
     return new AACFileMeidaSource(env, file);
 }
+double getSampleRate(const std::string& filePath) {
+    // Construct the ffprobe command to extract the sample rate of the audio stream
+    std::string command = "ffprobe -select_streams a:0 -show_entries stream=sample_rate -of default=noprint_wrappers=1:nokey=1 " + filePath + " 2>/dev/null";
+    std::array<char, 128> buffer;
+    std::string result;
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command.c_str(), "r"), pclose);
 
+    if (!pipe) {
+        std::cerr << "Failed to run ffprobe command." << std::endl;
+        return 0;
+    }
+
+    // Read the output from ffprobe
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+
+    // Parse the output (e.g., "44100")
+    if (!result.empty()) {
+        try {
+            double sampleRate = std::stod(result);
+            double frameRate = sampleRate / 1024.0; // Calculate frame rate
+            return frameRate;
+        } catch (const std::exception& e) {
+            std::cerr << "Failed to parse sample rate: " << e.what() << std::endl;
+        }
+    }
+
+    return 0;
+}
 AACFileMeidaSource::AACFileMeidaSource(UsageEnvironment* env, const std::string& file) :
     MediaSource(env){
 
     mSourceName = file;
     mFile = fopen(file.c_str(), "rb");
 
-    setFps(43);
+    setFps(getSampleRate(file));
 
     for(int i = 0; i < DEFAULT_FRAME_NUM; ++i){
         mEnv->threadPool()->addTask(mTask);
