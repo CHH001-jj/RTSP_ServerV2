@@ -181,7 +181,6 @@ void MediaSession::sendPacketCallback(void* arg1, void* arg2, void* packet, Sink
 void MediaSession::handleSendRtpPacket(MediaSession::Track* track, RtpPacket* rtpPacket)
 {
 //    LOGI("");
-
     std::list<RtpInstance*>::iterator it;
 
     for(it = track->mRtpInstances.begin(); it != track->mRtpInstances.end(); ++it){

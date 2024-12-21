@@ -65,11 +65,10 @@ int main() {
             source = AACFileMeidaSource::createNew(env, "../data/" + fileNames[i] + ".aac");
             sink = AACFileSink::createNew(env, source);
             session->addSink(MediaSession::TrackId1, sink);
-            // session->startMulticast(); //多播
             sessMgr->addSession(session);
         }
     }
-    LOGI("----------session init end------");
+    LOGI("--------session init end------");
 
     rtspServer->start();
     env->scheduler()->loop();

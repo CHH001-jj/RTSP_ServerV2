@@ -29,12 +29,9 @@ Sink::Sink(UsageEnvironment* env, MediaSource* mediaSource, int payloadType) :
 Sink::~Sink(){
     LOGI("~Sink()");
 
-    //mEnv->scheduler()->removeTimedEvent(mTimerId);// 从定时器中删除，由定时器内部自己已实现，这里不再需要调用
-
     delete mTimerEvent;
     delete mMediaSource;
 
-    //Delete::release(mTimerEvent);
 }
 void Sink::stopTimerEvent() {
 
